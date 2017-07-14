@@ -1,0 +1,31 @@
+{
+    "name": "backtheweb/linguo",
+    "description": "Laravel Gettext integration",
+    "type": "library",
+    "version": "1.0.0-beta",
+    "require": {
+        "php": "^5.5.9 || ^7.0",
+        "gettext/gettext": "^3.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jordi Touza Bonnin",
+            "email": "jordi.touza@backtheweb.com"
+        }
+    ],
+
+    "minimum-stability": "dev",
+
+    "autoload": {
+        "psr-4": {
+            "Backtheweb\\Linguo\\": "src"
+        },
+
+        "files": [
+            "src/helpers.php"
+        ]
+    }
+
+
+}

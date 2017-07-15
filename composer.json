@@ -2,7 +2,7 @@
     "name": "backtheweb/linguo",
     "description": "Laravel Gettext integration",
     "type": "library",
-    "version": "1.0.0-beta",
+    "version": "0.0.1",
     "require": {
         "php": "^5.5.9 || ^7.0",
         "gettext/gettext": "^3.5"

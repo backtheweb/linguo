@@ -126,13 +126,12 @@ class ParseCommand extends Command
 
         foreach($sources as $file){
 
-            $ext    = pathinfo($file, PATHINFO_EXTENSION);
+            //$ext    = pathinfo($file, PATHINFO_EXTENSION);
             $count  = $pot->count();
             $string = file_get_contents($file);
             $type   = null;
 
             switch(true){
-
 
                 case preg_match('/.blade.php/', $file):
 

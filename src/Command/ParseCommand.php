@@ -4,13 +4,11 @@ namespace Backtheweb\Linguo\Command;
 use Config;
 
 use Illuminate\Console\Command;
-use Illuminate\Config\Repository;
 use League\Flysystem\Exception;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-use Backtheweb\Linguo\Translator;
 
 class ParseCommand extends Command
 {
@@ -19,7 +17,7 @@ class ParseCommand extends Command
      *
      * @var string
      */
-    protected $name = 'linguo:parse';
+    protected $name = 'linguo';
     /**
      * The console command description.
      *
@@ -66,7 +64,8 @@ class ParseCommand extends Command
         $this->i18nPath    = Config::get('linguo.i18nPath');
         $this->locales     = Config::get('linguo.locales');
 
-        $domain            = 'default';
+        $headers           = Config::get('linguo.headers');
+        $domain            = Config::get('linguo.domain');
         $translations      = null;
         $sources           = [];
 
@@ -182,8 +181,9 @@ class ParseCommand extends Command
 
         foreach($this->locales as $locale){
 
-            $lang   = \Locale::getPrimaryLanguage($locale);
-            $base   = $this->i18nPath . '/' . $lang . '/';
+            //$lang = \Locale::getPrimaryLanguage($locale);
+
+            $base = $this->i18nPath . '/' . $locale . '/';
 
             if(!is_dir($base)){
                 mkdir($base, '0777', true);
@@ -201,11 +201,16 @@ class ParseCommand extends Command
 
             $msg = sprintf('%s %s <info>Done!</info>', $domain, $locale);
             $this->line($msg);
+
             $po->setLanguage($locale);
             $po->setDomain($domain);
-            $po->setHeader('Project-Id-Version',        'ntradeshows');
-            $po->setHeader('Language-Team',             'backtheweb <translators@backtheweb.com>');
-            $po->setHeader('X-Poedit-SourceCharset',    'UTF-8');
+
+            foreach($headers as $k => $v){
+                $po->setHeader($k, $v);
+            }
+
+            $po->setHeader('X-Poedit-SourceCharset', 'UTF-8');
+
             $po->mergeWith($pot, \Gettext\Translations::MERGE_ADD | \Gettext\Translations::MERGE_REMOVE | \Gettext\Translations::MERGE_COMMENTS | \Gettext\Translations::MERGE_REFERENCES | \Gettext\Translations::MERGE_PLURAL);
             $po->toPoFile($poFile);
 

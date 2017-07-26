@@ -2,10 +2,9 @@
 
 return [
 
-    'domain'  => 'default',
     'headers' => [
         'Project-Id-Version'    => 'linguo',
-        'Language-Team'         => 'Backtheweb <info@backtheweb.com>'
+        'Language-Team'         => 'TeamName <info@example.com>'
     ],
 
     'sources' => [
@@ -13,10 +12,14 @@ return [
         base_path('app/Http/Controllers'),
     ] ,
 
-    'i18nPath'     => base_path('resources/lang'),
-    'locales'      => ['es', 'en', 'ca_ES'],
+    'i18nPath'  => base_path('resources/lang'),
 
-    'domains' => [
+    'ui'  => [
+        'enable'        => true,
+        'middleware'    => ['web', 'auth']
+    ],
 
-    ]
+    'domain'    => 'default',
+    'domains'   => [],
+    'locales'   => ['es', 'en'],     // may be en or en_GB
 ];

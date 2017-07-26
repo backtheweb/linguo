@@ -23,14 +23,12 @@ class LinguoServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         $this->app->singleton('linguo.loader', function ($app) {
 
             return new FileLoader($app['files'], $app['path.lang']);
         });
 
         $this->app->singleton('linguo', function ($app) {
-
 
             $config  = $app['config'];
             $options = [
@@ -46,12 +44,17 @@ class LinguoServiceProvider extends ServiceProvider
             return $linguo;
         });
 
+        $this->commands([
+            \Backtheweb\Linguo\Command\ParseCommand::class,
+            \Backtheweb\Linguo\Command\ConvertCommand::class,
+        ]);
 
-        $this->commands([\Backtheweb\Linguo\Command\ParseCommand::class]);
-        //$this->commands([\Backtheweb\Linguo\Command\PoToPhpCommand::class]);
+        $config = isset($this->app->config['linguo']['ui']) ? $this->app->config['linguo']['ui'] : null;
 
-        //$this->enableUi();
+        if($config && $config['enable'] === true) {
 
+            $this->enableUi($config);
+        }
     }
 
     /**
@@ -66,13 +69,16 @@ class LinguoServiceProvider extends ServiceProvider
         ];
     }
 
-
-    public function enableUi()
+    /**
+     * @param array|null $config
+     */
+    protected function enableUi(Array $config = [])
     {
+
         $this->app['router']->group([
 
             'namespace'  => '\Backtheweb\Linguo\Http\Controllers',
-            'middleware' =>  [ 'web', 'auth' ]
+            'middleware' =>  $config['middleware']
 
         ], function () {
 

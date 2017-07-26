@@ -23,7 +23,7 @@ class ParseCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Display all files where the argument is used as a lemma';
+    protected $description = 'Parse files looking for translation keys';
 
     /**
      * Folders to seek for missing translations

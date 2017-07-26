@@ -14,6 +14,8 @@ class IndexController extends Controller {
      */
     public function index()
     {
-        return view('linguo::index', compact('result'));
+        return view('linguo::index', [
+
+        ]);
     }
 }

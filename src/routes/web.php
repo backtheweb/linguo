@@ -1,3 +1,3 @@
 <?php
 
-Route::get('linguo', 'IndexController@index');
+Route::get('linguo', 'IndexController@index')->name('linguo');

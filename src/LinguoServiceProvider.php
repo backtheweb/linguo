@@ -48,7 +48,7 @@ class LinguoServiceProvider extends ServiceProvider
 
 
         $this->commands([\Backtheweb\Linguo\Command\ParseCommand::class]);
-        $this->commands([\Backtheweb\Linguo\Command\StoreCommand::class]);
+        //$this->commands([\Backtheweb\Linguo\Command\PoToPhpCommand::class]);
 
         //$this->enableUi();
 

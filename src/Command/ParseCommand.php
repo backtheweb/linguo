@@ -17,7 +17,7 @@ class ParseCommand extends Command
      *
      * @var string
      */
-    protected $name = 'linguo';
+    protected $name = 'linguo:parse';
     /**
      * The console command description.
      *

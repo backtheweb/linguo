@@ -23,7 +23,6 @@ class LinguoServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('Backtheweb\Linguo\LoaderInterface', 'Backtheweb\Linguo\FileLoader');
 
         $this->app->singleton('linguo.loader', function ($app) {
 
@@ -32,33 +31,27 @@ class LinguoServiceProvider extends ServiceProvider
 
         $this->app->singleton('linguo', function ($app) {
 
-            $loader     = $app['linguo.loader'];
-            $locale     = $app['config']['app.locale'];
-            $translator = new Translator($loader, $locale);
 
-            $translator->setFallback($app['config']['app.fallback_locale']);
+            $config  = $app['config'];
+            $options = [
 
-            return $translator;
+                'locale'    => $config['app.locale'],
+                'fallback'  => $config['app.fallback_locale'],
+                'domain'    => $config['linguo']['domain'],
+                'domains'   => $config['linguo']['domains'],
+            ];
+
+            $linguo = new Linguo($app['linguo.loader'], $options);
+
+            return $linguo;
         });
 
-
-        /*
-        if (file_exists($file = __DIR__ . '/' . 'helpers.php')) {
-            require $file;
-        }*/
-
-
-        $this->app['router']->group([
-            'namespace'  => '\Backtheweb\Linguo\Http\Controllers',
-            'middleware' =>  [ 'web' ]
-        ], function () {
-
-            require __DIR__.'/routes/web.php';
-        });
-
-        $this->loadViewsFrom(__DIR__.'/views', 'linguo');
 
         $this->commands([\Backtheweb\Linguo\Command\ParseCommand::class]);
+        $this->commands([\Backtheweb\Linguo\Command\StoreCommand::class]);
+
+        //$this->enableUi();
+
     }
 
     /**
@@ -69,8 +62,24 @@ class LinguoServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            Translator::class,
+            Linguo::class,
         ];
+    }
+
+
+    public function enableUi()
+    {
+        $this->app['router']->group([
+
+            'namespace'  => '\Backtheweb\Linguo\Http\Controllers',
+            'middleware' =>  [ 'web', 'auth' ]
+
+        ], function () {
+
+            require __DIR__.'/routes/web.php';
+        });
+
+        $this->loadViewsFrom(__DIR__.'/views', 'linguo');
     }
 
 }

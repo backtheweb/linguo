@@ -15,4 +15,8 @@ return [
 
     'i18nPath'     => base_path('resources/lang'),
     'locales'      => ['es', 'en', 'ca_ES'],
+
+    'domains' => [
+
+    ]
 ];

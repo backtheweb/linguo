@@ -43,9 +43,9 @@ class TranslatorExtension extends Twig_Extension
 
     public function getFunctions(){
         return array(
-            new \Twig_SimpleFunction('__', [$this, 'trans'],    ['is_safe' => ['html']]),
-            new \Twig_SimpleFunction('_x', [$this, 'trans'],    ['is_safe' => ['html']]),
-            new \Twig_SimpleFunction('_n', [$this, 'plural'],   ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('__',  [$this, 'trans'],    ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('_x',  [$this, 'trans'],    ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('n__', [$this, 'plural'],   ['is_safe' => ['html']]),
         );
     }
 
@@ -78,10 +78,19 @@ class TranslatorExtension extends Twig_Extension
 
     public function trans($msgId, $args = [], $domain = 'default' , $locale = null){
 
+
+        if(null === $locale){
+            $locale = app()->getLocale();
+        }
+
         return App('linguo')->trans($msgId, $args, $domain, $locale);
     }
 
     public function plural($msgId, $plural, $count = 1,  $args = [], $domain = 'default' , $locale = null){
+
+        if(null === $locale){
+            $locale = app()->getLocale();
+        }
 
         return App('linguo')->plural($msgId, $plural, $count, $args, $domain, $locale);
     }

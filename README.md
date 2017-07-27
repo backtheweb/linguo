@@ -33,16 +33,20 @@ Edit `config/linguo.php`
 ````
 return [
 
-    // Paths read keys
+    'headers' => [
+        'Project-Id-Version'    => 'linguo',
+        'Language-Team'         => 'TeamName <info@example.com>'
+    ],
+
     'sources' => [
         base_path('resources/views'),
         base_path('app/Http/Controllers'),
-    ],
-    
-    'i18nPath'     => base_path('resources/lang'),
+    ] ,
 
-    // Add your locales
-    'locales'      => ['es_ES', 'en_GB', 'de_DE', 'it_IT', 'fr_FR', 'pt_BR'], 
+    'i18nPath'  => base_path('resources/lang'),
+    'domain'    => 'default',           // defualt domain
+    'domains'   => [],                  // others domains to process
+    'locales'   => ['es', 'en'],        // may be en or en_GB
 ];
 ````
 
@@ -61,15 +65,17 @@ php artisian linguo:parse
 ### What does it do?
 
 1. Read the folders defined on `sources` config and extract the keys form translation functions gettext, ngettext, __, _n
-
 2. Create a catalog `default.pot` file whit keys.
- 
 3. Foreach language defined on `locales`:
 
     * Create or/update the `{local}/default.po` file.
-    
     * Create a `{local}/default.php` file with translations defined on `{local}/default.po`
     
+## Convert Po to array
 
-    
-    
+````
+php artisian linguo:convert 
+php artisian linguo:convert default 
+```` 
+
+Default is the domain/file name by default, default is used.

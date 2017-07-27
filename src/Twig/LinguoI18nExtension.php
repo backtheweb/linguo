@@ -10,7 +10,7 @@ use Backtheweb\Linguo\Translator;
 use Backtheweb\Linguo\LoaderInterface;
 use Backtheweb\Linguo\FileLoader;
 
-class TranslatorExtension extends Twig_Extension
+class LinguoI18nExtension extends Twig_Extension
 {
     /**
      * @var \Backtheweb\Linguo\Translator

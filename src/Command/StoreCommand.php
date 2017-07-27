@@ -60,17 +60,12 @@ class StoreCommand extends Command
      */
     public function fire()
     {
-
-
         $locale      = Config::get('app.locale');
         $i18nPath    = Config::get('linguo.i18nPath');
 
-
         $this->line(sprintf('<info>%s</info> on path <comment>%s</comment>', $locale, $i18nPath));
 
-        $path = $i18nPath . '/' . $locale;
-
-
+        $path  = $i18nPath . '/' . $locale;
         $files = glob($path .'/*.{php}', GLOB_BRACE);
 
         foreach($files as $file){
@@ -81,12 +76,10 @@ class StoreCommand extends Command
             $this->create($info['filename'], $locale, $data);
         }
 
-
         return 0;
     }
 
     protected function create($domain, $locale, $data){
-
 
         switch (true){
 
@@ -100,26 +93,20 @@ class StoreCommand extends Command
 
         $this->line(sprintf('<info>%s</info> <comment>%s</comment>', $domain, $format ));
 
-
         $catalog = Catalog::updateOrCreate([
             'name'          => $domain,
             'locale'        => $locale,
             'source_format' => $format,
         ]);
 
-
-
         switch($format){
 
             case 'php-array':    $this->extract_array($catalog, $data);      break;
             case 'php-array-po': $this->extract_array_po($catalog, $data);   break;
-
         }
     }
 
     protected function extract_array_po(Catalog $catalog, array $source = []){
-
-
 
         $messages = $source[$catalog->name];
 
@@ -139,14 +126,13 @@ class StoreCommand extends Command
             if(is_array($v)){
 
                 $msg = sprintf('<info>%s</info> <comment>%s</comment>', $k, '');
-                print_r($v);
+                print_r($msg);
 
             } else {
 
                 $msg = sprintf('<info>%s</info> <comment>%s</comment>', $k, $v);
                 $this->line($msg);
             }
-
         }
     }
 }

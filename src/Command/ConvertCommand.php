@@ -22,7 +22,7 @@ class ConvertCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Convert domain a po file to php array, use default as default domain';
+    protected $description = 'Convert po file to php array';
 
     /**
      * Folders to seek for missing translations
@@ -75,10 +75,8 @@ class ConvertCommand extends Command
         foreach($this->locales as $locale){
 
             $base   = $this->i18nPath . '/' . $locale . '/';
-
             $poFile = $base .  $domain . '.po';
             $target = $base .  $domain . '.php';
-
 
             $po = \Gettext\Translations::fromPoFile($poFile);
 

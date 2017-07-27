@@ -48,13 +48,6 @@ class LinguoServiceProvider extends ServiceProvider
             \Backtheweb\Linguo\Command\ParseCommand::class,
             \Backtheweb\Linguo\Command\ConvertCommand::class,
         ]);
-
-        $config = isset($this->app->config['linguo']['ui']) ? $this->app->config['linguo']['ui'] : null;
-
-        if($config && $config['enable'] === true) {
-
-            $this->enableUi($config);
-        }
     }
 
     /**
@@ -71,10 +64,9 @@ class LinguoServiceProvider extends ServiceProvider
 
     /**
      * @param array|null $config
-     */
+     *
     protected function enableUi(Array $config = [])
     {
-
         $this->app['router']->group([
 
             'namespace'  => '\Backtheweb\Linguo\Http\Controllers',
@@ -87,5 +79,6 @@ class LinguoServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__.'/views', 'linguo');
     }
+     */
 
 }

@@ -13,12 +13,6 @@ return [
     ] ,
 
     'i18nPath'  => base_path('resources/lang'),
-
-    'ui'  => [
-        'enable'        => true,
-        'middleware'    => ['web', 'auth']
-    ],
-
     'domain'    => 'default',
     'domains'   => [],
     'locales'   => ['es', 'en'],     // may be en or en_GB
